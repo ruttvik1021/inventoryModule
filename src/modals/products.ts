@@ -54,6 +54,9 @@ const productSchema = new mongoose.Schema(
     description: {
       type: String,
     },
+    currentStock: {
+      type: Number,
+    },
   },
   {
     timestamps: true,
@@ -75,6 +78,7 @@ interface IProduct {
   lowQuantity?: number;
   images?: Array<string>;
   description?: string;
+  currentStock?: number;
 }
 
 export interface IProductRequest {
@@ -94,6 +98,7 @@ export interface IProductRequest {
   lowQuantity?: number;
   images?: Array<string>;
   description?: string;
+  currentStock?: number;
 }
 
 interface IProductDoc extends mongoose.Document {
@@ -111,6 +116,7 @@ interface IProductDoc extends mongoose.Document {
   lowQuantity?: number;
   images?: Array<string>;
   description?: string;
+  currentStock?: number;
 }
 
 interface IProductModel extends mongoose.Model<IProductDoc> {

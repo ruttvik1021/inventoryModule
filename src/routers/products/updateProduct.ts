@@ -3,6 +3,7 @@ import { productApiEndPoints } from "../../constants/constants";
 import { body, validationResult } from "express-validator";
 import { messages, parameters } from "./constants";
 import { Product } from "../../modals/products";
+import { Category } from "../../modals/category";
 
 const router = express.Router();
 
@@ -60,19 +61,39 @@ router.put(
   ],
   async (req: Request, res: Response) => {
     const { id } = req.params;
+    const { categoryId } = req.body;
     const errors = validationResult(req);
     if (!id) return res.status(400).send({ message: messages.invalidId });
     if (!errors.isEmpty())
       return res.status(400).send({ message: errors.array()[0].msg });
 
-    const product = await Product.findOneAndUpdate(
+    const product = await Product.findOne({ _id: id });
+
+    if (!product)
+      return res.status(400).send({ message: messages.productDoesNotExist });
+
+    const previousCategory = await Category.findOne({
+      _id: product.categoryId,
+    });
+    const newCategory = await Category.findOne({ _id: categoryId });
+
+    if (previousCategory !== newCategory) {
+      await Category.findOneAndUpdate(
+        { _id: product.categoryId },
+        { $inc: { productsCount: -1 } },
+        { new: true }
+      );
+      await Category.findOneAndUpdate(
+        { _id: categoryId },
+        { $inc: { productsCount: 1 } },
+        { new: true }
+      );
+    }
+    await Product.findOneAndUpdate(
       { _id: id },
       { ...req.body },
       { returnOriginal: true }
     );
-
-    if (!product)
-      return res.status(400).send({ message: messages.productDoesNotExist });
 
     res.status(200).send({ message: messages.productUpdated });
   }

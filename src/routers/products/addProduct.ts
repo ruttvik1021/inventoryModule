@@ -5,6 +5,7 @@ import { TokenValidator } from "../../middlewares/token-handler";
 import { Category } from "../../modals/category";
 import { IProductRequest, Product } from "../../modals/products";
 import { descriptionLimit, messages, parameters } from "./constants";
+import { ProductStock } from "../../modals/productStock";
 
 const router = express.Router();
 
@@ -91,6 +92,8 @@ router.post(
       description,
     }: IProductRequest = req.body;
 
+    const { userId, organizationId } = req.body.details;
+
     if (newCategory && newCategoryName) {
       const categoryExist = await Category.findOne({
         categoryName: newCategoryName,
@@ -150,8 +153,8 @@ router.post(
       const newProduct = Product.build({
         productName: productName,
         categoryId: categoryId,
-        userId: req.body.details.userId,
-        organizationId: req.body.details.organizationId,
+        userId: userId,
+        organizationId: organizationId,
         notifyWhenLow: notifyWhenLow,
         price: price,
         discountType: discountType,
@@ -162,6 +165,7 @@ router.post(
         lowQuantity: lowQuantity,
         images: images,
         description: description,
+        currentStock: openingStock,
       });
 
       await newProduct.save();

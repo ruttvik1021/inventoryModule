@@ -28,6 +28,10 @@ router.get(
         return {
           productName: item.productName,
           categoryId: item.categoryId,
+          description: item?.description,
+          lowQuantity: item?.lowQuantity,
+          openingStock: item?.openingStock,
+          currentStock: item?.currentStock,
           id: item._id,
         };
       });

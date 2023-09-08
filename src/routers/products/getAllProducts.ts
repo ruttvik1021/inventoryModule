@@ -21,7 +21,9 @@ router.get(
           productName: item.productName,
           categoryId: item.categoryId,
           description: item?.description,
-          image: item?.images?.length ? item.images[0] : "",
+          lowQuantity: item?.lowQuantity,
+          openingStock: item?.openingStock,
+          currentStock: item?.currentStock,
           id: item._id,
         };
       });
