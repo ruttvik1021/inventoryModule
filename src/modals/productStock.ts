@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 
+export type ActionTypes = "ADD" | "REMOVE";
+
 const productStockSchema = new mongoose.Schema(
   {
     productId: {
@@ -14,8 +16,11 @@ const productStockSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    currentQuantity: {
+    quantityModified: {
       type: Number,
+    },
+    actionType: {
+      type: String,
     },
   },
   {
@@ -27,14 +32,16 @@ interface IProductStock {
   productId: string;
   organizationId?: string;
   userId?: string;
-  currentQuantity: number;
+  quantityModified: number;
+  actionType: ActionTypes;
 }
 
 interface IProductStockDoc extends mongoose.Document {
   productId: string;
   organizationId?: string;
   userId?: string;
-  currentQuantity: number;
+  quantityModified: number;
+  actionType: ActionTypes;
 }
 
 interface IProductStockModel extends mongoose.Model<IProductStockDoc> {
@@ -48,4 +55,4 @@ productStockSchema.statics.build = (attributes: IProductStock) => {
 export const ProductStock = mongoose.model<
   IProductStockDoc,
   IProductStockModel
->("ProductStock", productStockSchema);
+>("ProductStockLogs", productStockSchema);

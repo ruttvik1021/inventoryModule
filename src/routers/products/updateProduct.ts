@@ -4,11 +4,13 @@ import { body, validationResult } from "express-validator";
 import { messages, parameters } from "./constants";
 import { Product } from "../../modals/products";
 import { Category } from "../../modals/category";
+import { TokenValidator } from "../../middlewares/token-handler";
 
 const router = express.Router();
 
 router.put(
   productApiEndPoints.updateProduct,
+  TokenValidator,
   [
     body(parameters.productName)
       .isString()

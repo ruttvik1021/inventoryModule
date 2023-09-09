@@ -13,6 +13,9 @@ import { GetProductByIdRoute } from "./routers/products/getProductById";
 import { GetProductByCategoryRoute } from "./routers/products/getProductByCategory";
 import { UpdateProductByIdRoute } from "./routers/products/updateProduct";
 import { DeleteProductByIdRoute } from "./routers/products/deleteProduct";
+import { AddStockRoute } from "./routers/productStocks/addProductStock";
+import { RemoveStockRoute } from "./routers/productStocks/removeProductStock";
+import { GetStockHistoryByProductRoute } from "./routers/productStocks/getStockHistoryByProduct";
 const PORT = process.env.PORT || 3002;
 
 const app = express();
@@ -31,6 +34,10 @@ app.use(GetProductByIdRoute);
 app.use(GetProductByCategoryRoute);
 app.use(UpdateProductByIdRoute);
 app.use(DeleteProductByIdRoute);
+app.use(AddStockRoute);
+app.use(RemoveStockRoute);
+
+app.use(GetStockHistoryByProductRoute);
 
 app.listen(PORT, () => {
   console.log(`Listening to port ${PORT}`);

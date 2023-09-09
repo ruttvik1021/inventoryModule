@@ -1,5 +1,5 @@
-// export const JWT_KEY = "UnV0dHZpazEwMjE=";
-export const JWT_KEY = process.env.JWT_KEY!;
+export const JWT_KEY = "UnV0dHZpazEwMjE=";
+// export const JWT_KEY = process.env.JWT_KEY!;
 
 export const categoryApiEndPoints = {
   createCategory: "/api/create/category",
@@ -16,6 +16,9 @@ export const productApiEndPoints = {
   getProductByID: "/api/getProduct/:id",
   getProductByCategory: "/api/getProduct/category/:id",
   deleteProduct: "/api/delete/product/:id",
+  addStocks: "/api/add/stocks/:id",
+  removeStocks: "/api/remove/stocks/:id",
+  getStockHistoryByProduct: "/api/getStockHistory/:id",
 };
 
 export const baseUrls = {
